@@ -1,3 +1,13 @@
+# FusionFall Android — OpenFusion:Pocket fork
+
+This repository is a separate Android development fork maintained under `bat221k-creator`, based on [OpenFusion:Pocket](https://github.com/rsigristc/OpenFusion-Pocket). Our **v0.1.0** branch uses a separate Android package (`com.bat221k.fusionfall.android`) and release-update channel; Retrobution is the initial compatibility target. See [our fork development notes](docs/FUSIONFALL_ANDROID.md).
+
+**Attribution and permissions:** The original project's `LICENSE`, `NOTICE`, and `CREDITS.md` remain in place. MIT permission for original contributions does **not** grant rights to third-party FusionFall assets, UI images, trademarks or other external materials. This is unofficial and not endorsed by the rights holders or server teams.
+
+---
+
+## Upstream project documentation
+
 # OpenFusion:Pocket
 
 **A native FusionFall client for Android, with an experimental native iOS edition, rebuilt in Unity 2022.3 LTS.**
