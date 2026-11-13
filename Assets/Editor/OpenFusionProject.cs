@@ -47,11 +47,11 @@ namespace OpenFusion.EditorTools
         public static void ConfigurePlayer()
         {
             PocketAppIcon.Configure();
-            PlayerSettings.companyName = "OpenFusion"; PlayerSettings.productName = "OpenFusion:Pocket";
+            PlayerSettings.companyName = "bat221k-creator"; PlayerSettings.productName = "FusionFall Android";
             PlayerSettings.bundleVersion = OpenFusion.Api.PocketRelease.AppVersion; PlayerSettings.Android.bundleVersionCode = OpenFusion.Api.PocketRelease.BuildCode;
             PlayerSettings.colorSpace = ColorSpace.Gamma;      // el juego original está hecho en gamma
             var a = NamedBuildTarget.Android;
-            PlayerSettings.SetApplicationIdentifier(a, "com.openfusion.android");
+            PlayerSettings.SetApplicationIdentifier(a, OpenFusion.Api.PocketRelease.Package);
             PlayerSettings.SetScriptingBackend(a, ScriptingImplementation.IL2CPP);
             PlayerSettings.SetManagedStrippingLevel(a, ManagedStrippingLevel.Low);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
