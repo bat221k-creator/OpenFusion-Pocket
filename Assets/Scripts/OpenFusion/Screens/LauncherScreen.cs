@@ -1079,18 +1079,18 @@ namespace OpenFusion.Screens
 
         void DrawAbout(Rect a)
         {
-            var body = ModalFrame(a, Mathf.Min(a.width - 16f, 620f), 410f, "About OpenFusion:Pocket");
+            var body = ModalFrame(a, Mathf.Min(a.width - 16f, 620f), 410f, "About FusionFall Android");
             float x0 = body.x + 16f, iw = body.width - 32f, y = body.y + 14f;
             LblM(new Rect(x0, y, iw, 22f), "Version " + Application.version + " (build " + (PocketIos.Available ? PocketIos.InstalledBuild : PocketRelease.BuildCode) + ")", 15, CModalText); y += 30f;
             LblM(new Rect(x0, y, iw, 22f), "Unity " + Application.unityVersion + " / " + (IntPtr.Size * 8) + "-bit / " + SystemInfo.graphicsDeviceType, 14, CModalText); y += 26f;
             LblM(new Rect(x0, y, iw, 22f), "Launcher feature reference: OpenFusionLauncher " + LauncherServerLink.UpstreamVersion, 13, CGray); y += 26f;
             LblM(new Rect(x0, y, iw, 22f), "Android adaptation: Rodrigo Sigrist / rsigristc", 14, CModalText); y += 28f;
             LblM(new Rect(x0, y, iw, 22f), "©2020-2026 OpenFusion Contributors", 15, CModalText); y += 22f;
-            LblM(new Rect(x0, y, iw, 22f), "OpenFusion is licensed under MIT.", 15, CModalText);
+            LblM(new Rect(x0, y, iw, 22f), "Original code: MIT; assets: third-party (see NOTICE).", 15, CModalText);
             LblM(new Rect(x0, y + 26f, iw, 22f), "Export errors + device info. No account data. Nothing uploads automatically.", 12, CGray);
             float by = body.yMax - 48f;
             if (Btn(new Rect(x0, by - 92f, iw, 38f), "Export Logs (private diagnostics)", Kind.Primary, true, 15)) CollectDiagnostics();
-            if (Btn(new Rect(x0, by - 46f, iw, 38f), "GitHub: rsigristc/OpenFusion-Pocket", Kind.Primary, true, 15, "github")) Application.OpenURL(PocketRelease.Repository);
+            if (Btn(new Rect(x0, by - 46f, iw, 38f), "GitHub: bat221k-creator/OpenFusion-Pocket", Kind.Primary, true, 15, "github")) Application.OpenURL(PocketRelease.Repository);
             if (Btn(new Rect(x0, by, 170f, 38f), "Check for updates", Kind.Primary, true, 15)) OpenUpdates();
             if (Btn(new Rect(x0 + 178f, by, 56f, 38f), null, Kind.Primary, true, 18, "discord")) Application.OpenURL("https://discord.gg/DYavckB");
             if (Btn(new Rect(body.xMax - 16f - 78f, by, 78f, 38f), "Close", Kind.Primary, true, 16)) CloseModal();
