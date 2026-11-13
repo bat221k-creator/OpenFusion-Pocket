@@ -1099,15 +1099,15 @@ namespace OpenFusion.Screens
         // ================================================================ Pagina de ajustes (4 pestanas, como el launcher original)
         sealed class Prefs
         {
-            public int keepAwake = 1, fps = Application.isMobilePlatform ? 0 : 1, quality = 1, look = 1;
+            public int keepAwake = 1, fps = Application.isMobilePlatform ? 0 : 2, quality = 1, look = 1;
             public Prefs Clone() { return (Prefs)MemberwiseClone(); }
             public bool Same(Prefs o) { return keepAwake == o.keepAwake && fps == o.fps && quality == o.quality && look == o.look; }
         }
-        static readonly int[] FpsVals = { 30, 60, -1 };
+        static readonly int[] FpsVals = { 30, 40, 60, -1 };
         static readonly float[] LookVals = { 0.2f, 0.3f, 0.45f };
         static Prefs LoadPrefs()
         {
-            return new Prefs { keepAwake = PlayerPrefs.GetInt("of_set_keepawake", 1), fps = PlayerPrefs.GetInt("of_set_fps", Application.isMobilePlatform ? 0 : 1), quality = PlayerPrefs.GetInt("of_set_quality", 1), look = PlayerPrefs.GetInt("of_set_look", 1) };
+            return new Prefs { keepAwake = PlayerPrefs.GetInt("of_set_keepawake", 1), fps = PlayerPrefs.GetInt("of_set_fps", Application.isMobilePlatform ? 0 : 2), quality = PlayerPrefs.GetInt("of_set_quality", 1), look = PlayerPrefs.GetInt("of_set_look", 1) };
         }
         static void SavePrefs(Prefs p)
         {
@@ -1119,7 +1119,7 @@ namespace OpenFusion.Screens
             try
             {
                 if (all || PlayerPrefs.HasKey("of_set_keepawake")) Screen.sleepTimeout = p.keepAwake == 1 ? SleepTimeout.NeverSleep : SleepTimeout.SystemSetting;
-                Application.targetFrameRate = FpsVals[Mathf.Clamp(p.fps, 0, 2)];
+                Application.targetFrameRate = FpsVals[Mathf.Clamp(p.fps, 0, 3)];
                 int n = QualitySettings.names.Length;
                 if (n > 0 && (all || PlayerPrefs.HasKey("of_set_quality"))) QualitySettings.SetQualityLevel(p.quality == 0 ? 0 : p.quality == 1 ? n / 2 : n - 1, true);
                 var tc = OpenFusion.World.TouchControls.Instance;
@@ -1234,7 +1234,7 @@ namespace OpenFusion.Screens
             if (launcher)
             {
                 prefsEdit.keepAwake = Choice(new Rect(x0, y, iw, 62f), "Keep the screen on while playing", new[] { "No", "Yes" }, prefsEdit.keepAwake); y += 74f;
-                prefsEdit.fps = Choice(new Rect(x0, y, iw, 62f), "Frame rate limit", new[] { "30 FPS", "60 FPS", "Unlimited" }, prefsEdit.fps); y += 74f;
+                prefsEdit.fps = Choice(new Rect(x0, y, iw, 62f), "Frame rate limit", new[] { "30 FPS", "40 FPS", "60 FPS", "Unlimited" }, prefsEdit.fps); y += 74f;
                 if (Btn(new Rect(x0, y, iw, 48f), "Forget saved logins", Kind.Danger, true, 16)) { foreach (var s in servers) PlayerPrefs.DeleteKey(UserKey(s)); PocketPlatform.ForgetAll(); PlayerPrefs.Save(); Toast("success", "Saved logins cleared"); }
             }
             else
