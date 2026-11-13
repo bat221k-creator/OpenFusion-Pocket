@@ -28,7 +28,7 @@ namespace OpenFusion.EditorTools
                 using (var stream = manifest.Open()) using (var memory = new MemoryStream())
                 {
                     stream.CopyTo(memory); byte[] bytes = memory.ToArray(); string strings = Encoding.UTF8.GetString(bytes) + Encoding.Unicode.GetString(bytes);
-                    Check(strings.Contains("android.permission.REQUEST_INSTALL_PACKAGES") && strings.Contains("com.openfusion.updater.PocketApkProvider") && strings.Contains("com.openfusion.android.updates"), "Updater permission/provider missing from merged Android manifest");
+                    Check(strings.Contains("android.permission.REQUEST_INSTALL_PACKAGES") && strings.Contains("com.openfusion.updater.PocketApkProvider") && strings.Contains(PocketRelease.Package + ".updates"), "Updater permission/provider missing from merged Android manifest");
                 }
             }
             Debug.Log("[updater-regression] APK installer classes, provider and permission verified");
@@ -52,7 +52,7 @@ namespace OpenFusion.EditorTools
             Check(PocketRelease.ParseVersion("v1.0") == PocketRelease.ParseVersion("1.0.0"), "Equivalent semantic versions differ");
             info.Version = "1.0"; info.VersionCode = 3;
             Check(info.NewerThan("1.0", 2), "Same-release build revision not detected");
-            foreach (string bad in new[] { "http://github.com/rsigristc/OpenFusion-Pocket/releases/download/v1.1/update.json", "https://github.com.evil.example/rsigristc/OpenFusion-Pocket/releases/download/v1.1/update.json", "https://github.com/other/other/releases/download/v1.1/update.json", root + "update.json?token=secret", "https://github.com:444/rsigristc/OpenFusion-Pocket/releases/download/v1.1/update.json" })
+            foreach (string bad in new[] { "http://github.com/bat221k-creator/OpenFusion-Pocket/releases/download/v1.1/update.json", "https://github.com.evil.example/bat221k-creator/OpenFusion-Pocket/releases/download/v1.1/update.json", "https://github.com/other/other/releases/download/v1.1/update.json", root + "update.json?token=secret", "https://github.com:444/bat221k-creator/OpenFusion-Pocket/releases/download/v1.1/update.json" })
                 Check(!PocketRelease.RepositoryUrl(bad, true), "Untrusted update URL accepted");
             manifest["package"] = "com.other.app"; Reject(() => read(), "Wrong package accepted"); manifest["package"] = PocketRelease.Package;
             manifest["sha256"] = new string('0', 64); Reject(() => read(), "Release/manifest hash mismatch accepted"); manifest["sha256"] = sha;
