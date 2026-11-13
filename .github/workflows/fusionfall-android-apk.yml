@@ -45,7 +45,7 @@ jobs:
       - name: Upload development APK
         uses: actions/upload-artifact@v4
         with:
-          name: FusionFall-Android-v0.1.0-unsigned-release
+          name: FusionFall-Android-v0.1.0-development
           path: build/Android/FusionFall-Android-v0.1.0.apk
           if-no-files-found: error
           retention-days: 14
