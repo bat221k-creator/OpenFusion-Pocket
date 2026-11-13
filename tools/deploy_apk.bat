@@ -16,6 +16,6 @@ echo adb: %ADB%
 "%ADB%" connect %DEV%
 "%ADB%" -s %DEV% install -r "%APK%"
 if errorlevel 1 ( echo FALLO la instalacion. Si dice "unauthorized" acepta la huella RSA en el movil; si "offline" repite adb connect con el puerto actual de Depuracion inalambrica. & exit /b 1 )
-"%ADB%" -s %DEV% shell monkey -p com.openfusion.android -c android.intent.category.LAUNCHER 1 >nul 2>&1
+"%ADB%" -s %DEV% shell monkey -p com.bat221k.fusionfall.android -c android.intent.category.LAUNCHER 1 >nul 2>&1
 echo Instalado y lanzado. Registro en vivo: "%ADB%" -s %DEV% logcat -s Unity
 endlocal
