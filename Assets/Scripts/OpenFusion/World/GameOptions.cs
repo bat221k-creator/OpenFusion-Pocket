@@ -26,7 +26,7 @@ namespace OpenFusion.World
         public int AA = 0;                         // 0 off, 1 FXAA, 2 MSAA x2, 3 MSAA x4
         public float GlowStrength = 0.5f;          // 0..1 (intensidad del bloom)
         public float Saturation = 0.5f;            // 0..1 (0,5 = neutro)
-        public int Fps = 1;                        // 0 = 30, 1 = 60, 2 = sin limite (mismo indice que el lanzador)
+        public int Fps = 2;                        // 0 = 30, 1 = 40, 2 = 60, 3 = unlimited (same as launcher)
         // ---- sonido (cnSoundOption) ----
         public bool MasterOn = true, SfxOn = true, VoiceOn = true, AmbientOn = true, MusicOn = true;
         public float Master = 0.5f, Sfx = 0.5f, Voice = 0.5f, Ambient = 0.5f, Music = 0.5f;
@@ -127,7 +127,7 @@ namespace OpenFusion.World
                 o.RenderScale = Mathf.Clamp(PlayerPrefs.GetFloat("of_x_scale", o.RenderScale), 0.5f, 1f); o.AA = Mathf.Clamp(PlayerPrefs.GetInt("of_x_aa", o.AA), 0, 3);
                 o.GlowStrength = Mathf.Clamp01(PlayerPrefs.GetFloat("of_x_glow", o.GlowStrength)); o.Saturation = Mathf.Clamp01(PlayerPrefs.GetFloat("of_x_sat", o.Saturation));
             }
-            o.Fps = Mathf.Clamp(PlayerPrefs.GetInt("of_set_fps", Application.isMobilePlatform ? 0 : 1), 0, 2);
+            o.Fps = Mathf.Clamp(PlayerPrefs.GetInt("of_set_fps", Application.isMobilePlatform ? 0 : 2), 0, 3);
             o.MasterOn = B("Master Volume Flag", true); o.Master = PlayerPrefs.GetFloat("Master Volume", 0.5f); o.SfxOn = B("SFX Volume Flag", true); o.Sfx = PlayerPrefs.GetFloat("SFX Volume", 0.5f);
             o.VoiceOn = B("Voice Volume Flag", true); o.Voice = PlayerPrefs.GetFloat("Voice Volume", 0.5f); o.AmbientOn = B("Ambient Volume Flag", true); o.Ambient = PlayerPrefs.GetFloat("Ambient Volume", 0.5f);
             o.MusicOn = B("Music Volume Flag", true); o.Music = PlayerPrefs.GetFloat("Music Volume", 0.5f);

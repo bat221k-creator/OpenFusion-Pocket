@@ -1079,18 +1079,18 @@ namespace OpenFusion.Screens
 
         void DrawAbout(Rect a)
         {
-            var body = ModalFrame(a, Mathf.Min(a.width - 16f, 620f), 410f, "About OpenFusion:Pocket");
+            var body = ModalFrame(a, Mathf.Min(a.width - 16f, 620f), 410f, "About FusionFall Android");
             float x0 = body.x + 16f, iw = body.width - 32f, y = body.y + 14f;
             LblM(new Rect(x0, y, iw, 22f), "Version " + Application.version + " (build " + (PocketIos.Available ? PocketIos.InstalledBuild : PocketRelease.BuildCode) + ")", 15, CModalText); y += 30f;
             LblM(new Rect(x0, y, iw, 22f), "Unity " + Application.unityVersion + " / " + (IntPtr.Size * 8) + "-bit / " + SystemInfo.graphicsDeviceType, 14, CModalText); y += 26f;
             LblM(new Rect(x0, y, iw, 22f), "Launcher feature reference: OpenFusionLauncher " + LauncherServerLink.UpstreamVersion, 13, CGray); y += 26f;
             LblM(new Rect(x0, y, iw, 22f), "Android adaptation: Rodrigo Sigrist / rsigristc", 14, CModalText); y += 28f;
             LblM(new Rect(x0, y, iw, 22f), "©2020-2026 OpenFusion Contributors", 15, CModalText); y += 22f;
-            LblM(new Rect(x0, y, iw, 22f), "OpenFusion is licensed under MIT.", 15, CModalText);
+            LblM(new Rect(x0, y, iw, 22f), "Original code: MIT; assets: third-party (see NOTICE).", 15, CModalText);
             LblM(new Rect(x0, y + 26f, iw, 22f), "Export errors + device info. No account data. Nothing uploads automatically.", 12, CGray);
             float by = body.yMax - 48f;
             if (Btn(new Rect(x0, by - 92f, iw, 38f), "Export Logs (private diagnostics)", Kind.Primary, true, 15)) CollectDiagnostics();
-            if (Btn(new Rect(x0, by - 46f, iw, 38f), "GitHub: rsigristc/OpenFusion-Pocket", Kind.Primary, true, 15, "github")) Application.OpenURL(PocketRelease.Repository);
+            if (Btn(new Rect(x0, by - 46f, iw, 38f), "GitHub: bat221k-creator/OpenFusion-Pocket", Kind.Primary, true, 15, "github")) Application.OpenURL(PocketRelease.Repository);
             if (Btn(new Rect(x0, by, 170f, 38f), "Check for updates", Kind.Primary, true, 15)) OpenUpdates();
             if (Btn(new Rect(x0 + 178f, by, 56f, 38f), null, Kind.Primary, true, 18, "discord")) Application.OpenURL("https://discord.gg/DYavckB");
             if (Btn(new Rect(body.xMax - 16f - 78f, by, 78f, 38f), "Close", Kind.Primary, true, 16)) CloseModal();
@@ -1099,15 +1099,15 @@ namespace OpenFusion.Screens
         // ================================================================ Pagina de ajustes (4 pestanas, como el launcher original)
         sealed class Prefs
         {
-            public int keepAwake = 1, fps = Application.isMobilePlatform ? 0 : 1, quality = 1, look = 1;
+            public int keepAwake = 1, fps = Application.isMobilePlatform ? 0 : 2, quality = 1, look = 1;
             public Prefs Clone() { return (Prefs)MemberwiseClone(); }
             public bool Same(Prefs o) { return keepAwake == o.keepAwake && fps == o.fps && quality == o.quality && look == o.look; }
         }
-        static readonly int[] FpsVals = { 30, 60, -1 };
+        static readonly int[] FpsVals = { 30, 40, 60, -1 };
         static readonly float[] LookVals = { 0.2f, 0.3f, 0.45f };
         static Prefs LoadPrefs()
         {
-            return new Prefs { keepAwake = PlayerPrefs.GetInt("of_set_keepawake", 1), fps = PlayerPrefs.GetInt("of_set_fps", Application.isMobilePlatform ? 0 : 1), quality = PlayerPrefs.GetInt("of_set_quality", 1), look = PlayerPrefs.GetInt("of_set_look", 1) };
+            return new Prefs { keepAwake = PlayerPrefs.GetInt("of_set_keepawake", 1), fps = PlayerPrefs.GetInt("of_set_fps", Application.isMobilePlatform ? 0 : 2), quality = PlayerPrefs.GetInt("of_set_quality", 1), look = PlayerPrefs.GetInt("of_set_look", 1) };
         }
         static void SavePrefs(Prefs p)
         {
@@ -1119,7 +1119,7 @@ namespace OpenFusion.Screens
             try
             {
                 if (all || PlayerPrefs.HasKey("of_set_keepawake")) Screen.sleepTimeout = p.keepAwake == 1 ? SleepTimeout.NeverSleep : SleepTimeout.SystemSetting;
-                Application.targetFrameRate = FpsVals[Mathf.Clamp(p.fps, 0, 2)];
+                Application.targetFrameRate = FpsVals[Mathf.Clamp(p.fps, 0, 3)];
                 int n = QualitySettings.names.Length;
                 if (n > 0 && (all || PlayerPrefs.HasKey("of_set_quality"))) QualitySettings.SetQualityLevel(p.quality == 0 ? 0 : p.quality == 1 ? n / 2 : n - 1, true);
                 var tc = OpenFusion.World.TouchControls.Instance;
@@ -1234,7 +1234,7 @@ namespace OpenFusion.Screens
             if (launcher)
             {
                 prefsEdit.keepAwake = Choice(new Rect(x0, y, iw, 62f), "Keep the screen on while playing", new[] { "No", "Yes" }, prefsEdit.keepAwake); y += 74f;
-                prefsEdit.fps = Choice(new Rect(x0, y, iw, 62f), "Frame rate limit", new[] { "30 FPS", "60 FPS", "Unlimited" }, prefsEdit.fps); y += 74f;
+                prefsEdit.fps = Choice(new Rect(x0, y, iw, 62f), "Frame rate limit", new[] { "30 FPS", "40 FPS", "60 FPS", "Unlimited" }, prefsEdit.fps); y += 74f;
                 if (Btn(new Rect(x0, y, iw, 48f), "Forget saved logins", Kind.Danger, true, 16)) { foreach (var s in servers) PlayerPrefs.DeleteKey(UserKey(s)); PocketPlatform.ForgetAll(); PlayerPrefs.Save(); Toast("success", "Saved logins cleared"); }
             }
             else

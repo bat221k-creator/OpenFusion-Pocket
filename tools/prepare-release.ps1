@@ -7,7 +7,8 @@ $projectRoot = Split-Path $PSScriptRoot -Parent
 $source = Get-Content (Join-Path $projectRoot 'Assets/Scripts/OpenFusion/Api/PocketRelease.cs') -Raw
 $version = [regex]::Match($source, 'const string AppVersion = "([0-9.]+)"').Groups[1].Value
 $codeText = [regex]::Match($source, 'const int BuildCode = (\d+)').Groups[1].Value
-if (-not $version -or -not $codeText) { throw 'Cannot read release version and build code.' }
+$packageId = [regex]::Match($source, 'const string Package = "([A-Za-z0-9_.]+)"').Groups[1].Value
+if (-not $version -or -not $codeText -or -not $packageId) { throw 'Cannot read release version, build code, or package ID.' }
 $apkPath = if ([IO.Path]::IsPathRooted($Apk)) { $Apk } else { Join-Path $projectRoot $Apk }
 $outPath = if ([IO.Path]::IsPathRooted($Output)) { $Output } else { Join-Path $projectRoot $Output }
 if (-not (Test-Path -LiteralPath $apkPath -PathType Leaf)) { throw 'Build the APK before preparing release assets.' }
@@ -20,7 +21,7 @@ $manifest = [ordered]@{
     schema = 1
     version = $version
     version_code = [int]$codeText
-    package = 'com.openfusion.android'
+    package = $packageId
     apk_asset = $asset
     size = (Get-Item -LiteralPath $target).Length
     sha256 = $hash

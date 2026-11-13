@@ -9,16 +9,16 @@ namespace OpenFusion.Api
 {
     public sealed class PocketRelease
     {
-        public const string Repository = "https://github.com/rsigristc/OpenFusion-Pocket";
-        public const string LatestApi = "https://api.github.com/repos/rsigristc/OpenFusion-Pocket/releases/latest";
-        public const int BuildCode = 7;
-        public const string AppVersion = "3.1";
+        public const string Repository = "https://github.com/bat221k-creator/OpenFusion-Pocket";
+        public const string LatestApi = "https://api.github.com/repos/bat221k-creator/OpenFusion-Pocket/releases/latest";
+        public const int BuildCode = 1;
+        public const string AppVersion = "0.1.0";
         public const int IosBuildCode = 8;
         public const string IosAppVersion = "0.5";
         public const string IosBundle = "com.openfusion.pocket.ios";
-        public const string IosApi = "https://api.github.com/repos/rsigristc/OpenFusion-Pocket/releases?per_page=100";
+        public const string IosApi = "https://api.github.com/repos/bat221k-creator/OpenFusion-Pocket/releases?per_page=100";
         public const string IosInstallHelp = Repository + "/blob/main/docs/IOS_INSTALL.md";
-        public const string Package = "com.openfusion.android";
+        public const string Package = "com.bat221k.fusionfall.android";
         public string Tag, Title, Notes, Page, ManifestUrl, ApkUrl, ApkName, Sha256, Version;
         public long Size, VersionCode;
         public bool IsIos;
@@ -29,7 +29,7 @@ namespace OpenFusion.Api
             if (!Uri.TryCreate(value, UriKind.Absolute, out var u) || u.Scheme != "https" || !u.IsDefaultPort || !string.IsNullOrEmpty(u.UserInfo) || !string.IsNullOrEmpty(u.Query) || !string.IsNullOrEmpty(u.Fragment)) return false;
             string path = u.AbsolutePath;
             return u.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase) &&
-                path.StartsWith("/rsigristc/OpenFusion-Pocket/releases/" + (asset ? "download/" : "tag/"), StringComparison.Ordinal);
+                path.StartsWith("/bat221k-creator/OpenFusion-Pocket/releases/" + (asset ? "download/" : "tag/"), StringComparison.Ordinal);
         }
         public static System.Version ParseVersion(string v)
         {

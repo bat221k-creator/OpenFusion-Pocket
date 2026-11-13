@@ -575,7 +575,7 @@ namespace OpenFusion.World
         }
 
         // ---- panel ADVANCED GRAPHICS (extra del port movil) ----
-        static readonly string[] AaNames = { "OFF", "FXAA", "MSAA 2X", "MSAA 4X" }; static readonly string[] FpsNames = { "30", "60", "MAX" };
+        static readonly string[] AaNames = { "OFF", "FXAA", "MSAA 2X", "MSAA 4X" }; static readonly string[] FpsNames = { "30", "40", "60", "MAX" };
         void DrawAdvanced(Event e)
         {
             var o = GameOptions.Cur; var panel = new Rect(300f, 125f, 420f, 380f);
@@ -603,7 +603,7 @@ namespace OpenFusion.World
             for (int i = 0; i < 4; i++) { int r = Choice(new Rect(x + i * 94f, y + 20f, 22f, 21f), AaNames[i], o.AA == i); if (r == 1 && o.AA != i) { o.AA = i; o.Detail = DetailLevel.Custom; Changed(); } }
             // fps
             y += 60f; Lbl(new Rect(x, y, 300f, 18f), "FRAME RATE", "smallcyan");
-            for (int i = 0; i < 3; i++) { int r = Choice(new Rect(x + i * 94f, y + 20f, 22f, 21f), FpsNames[i], o.Fps == i); if (r == 1 && o.Fps != i) { o.Fps = i; Changed(); } }
+            for (int i = 0; i < FpsNames.Length; i++) { int r = Choice(new Rect(x + i * 94f, y + 20f, 22f, 21f), FpsNames[i], o.Fps == i); if (r == 1 && o.Fps != i) { o.Fps = i; Changed(); } }
             if (Skin.Button(new Rect(panel.x + 110f, panel.yMax - 40f, 200f, 25f), "CLOSE", Skin.Get(SK, "keybutton"))) advanced = false;
         }
         int Choice(Rect r, string text, bool on)

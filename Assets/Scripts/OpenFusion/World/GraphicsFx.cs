@@ -49,7 +49,7 @@ namespace OpenFusion.World
         static readonly float[] HeightErr = { 40f, 30f, 20f, 10f, 5f };
         static readonly float[] DetailCull = { 0f, 40f, 80f, 120f, 160f };
         static readonly float[] ParticleFactor = { 1f / 3f, 2f / 3f, 1f, 4f / 3f };
-        static readonly int[] FpsVals = { 30, 60, -1 };
+        static readonly int[] FpsVals = { 30, 40, 60, -1 };
 
         public static OptionData Last;
         static GraphicsRunner runner;
@@ -77,7 +77,7 @@ namespace OpenFusion.World
                 QualitySettings.globalTextureMipmapLimit = (int)o.Texture;   // 0 completa, 1 mitad, 2 cuarto
                 ParticleDensity.Factor = ParticleFactor[Mathf.Clamp(o.ParticleEffect, 0, 3)]; foreach (var d in ParticleDensity.All.ToArray()) if (d != null) d.Rescale();
                 BlobShadow.AllShadows = o.Shadow == ShadowDetail.AllCharacters; BlobShadow.Refresh();
-                int fps = FpsVals[Mathf.Clamp(o.Fps, 0, 2)]; if (Application.targetFrameRate != fps) Application.targetFrameRate = fps;
+                int fps = FpsVals[Mathf.Clamp(o.Fps, 0, 3)]; if (Application.targetFrameRate != fps) Application.targetFrameRate = fps;
             }
             catch (System.Exception ex) { Debug.LogWarning("[opciones] graficos: " + ex.Message); }
             try { ApplyUrp(o); } catch (System.Exception ex) { Debug.LogWarning("[opciones] URP: " + ex.Message); }
