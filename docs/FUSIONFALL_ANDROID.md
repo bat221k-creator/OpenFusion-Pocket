@@ -37,3 +37,22 @@ The existing upstream PowerShell build script is Windows-oriented. A full native
 Keep the original `LICENSE`, `NOTICE` and `CREDITS.md`. The source project's MIT licensing **does not** cover all game artwork, legacy resources, third-party materials or trademarks. Do not bundle additional proprietary game resources into the repository. Use a private signing key, never commit it, and verify the matching signing certificate for future Android updates.
 
 The initial configuration CI only checks source alignment and **does not prove a successful Unity build**. Publishing a release must wait for a compiled, signed and device-tested APK.
+
+## Easiest first build — Windows PC (no Git or Python installation required)
+
+1. Download and sign into **Unity Hub** from https://unity.com/download. Activate your Unity Personal license in Hub if eligible.
+2. Install **Unity 2022.3.62f3**, not another 2022.3 build: https://unity.com/releases/editor/whats-new/2022.3.62f3
+3. In Unity Hub, include **Android Build Support** with child modules **Android SDK & NDK Tools** and **OpenJDK**. Those components are required for the project.
+4. Open the development branch: https://github.com/bat221k-creator/OpenFusion-Pocket/tree/fusionfall-android-v0.1 . Choose **Code → Download ZIP**, unzip to a normal local directory (for example `C:\GamesDev\FusionFallAndroid`). Do not double-click the script inside a compressed ZIP.
+5. In the unzipped directory double-click `tools/build-fusionfall-android.bat`. It invokes the existing upstream Unity command-line build method for a compile check and Android release build, then copies the new APK as `Builds/FusionFall-Android-v0.1.0.apk`. The console stays open to display errors.
+6. If the build fails, provide `Logs/unity-compile.log` or `Logs/unity-release.log` (review for personal data first). No account password, Unity license, game login, or signing key should be uploaded.
+
+The script does not grant ChatGPT remote computer access; source changes are made via the connected GitHub repo, while your own PC executes Unity. A compiled APK has not yet been verified.
+
+## Optional GitHub-hosted Unity builds
+
+The manually triggered workflow at `.github/workflows/fusionfall-android-apk.yml` uses GameCI Unity Builder v4, Unity 2022.3.62f3, Android IL2CPP, and `OpenFusion.EditorTools.FusionFallCiBuild.BuildAndroid`. It is intentionally **not auto-triggered** to avoid accidental billable GitHub Actions runs or license errors.
+
+GameCI's current licensing guidance: https://game.ci/docs/github/activation/ . GitHub repository **Settings → Secrets and variables → Actions** is where the account owner must enter any needed `UNITY_LICENSE` (Personal license file) or `UNITY_SERIAL` (supported Pro entitlement), plus `UNITY_EMAIL` and `UNITY_PASSWORD`. Do not put credentials in source code, screenshots, chat messages or workflows. GameCI warns that Unity Personal license file provisioning may be inconsistent; a local Unity Hub-activated Windows build is the recommended first path. Review licensing and account security before choosing third-party CI.
+
+**GitHub caveat:** A `workflow_dispatch` workflow normally must exist on the repository's default branch before the GitHub Actions **Run workflow** control appears. This development workflow is intentionally kept in a separate branch pending review; it may therefore not be clickable in the UI yet. Do **not** merge an untested release just to start cloud builds. Local compilation and hardware testing come first.
